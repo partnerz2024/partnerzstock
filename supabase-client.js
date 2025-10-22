@@ -1,4 +1,4 @@
-// Supabase 클라이언트 설정
+// Supabase 클라이언트 설정 - 파트너즈 증권 거래소
 import { createClient } from 'https://cdn.skypack.dev/@supabase/supabase-js@2';
 
 // 환경 변수에서 Supabase 설정 가져오기
@@ -11,6 +11,7 @@ export const supabase = createClient(supabaseUrl, supabaseKey);
 // 연결 상태 확인 함수
 export async function checkSupabaseConnection() {
   try {
+    console.log('Supabase 연결 확인 중...');
     const { data, error } = await supabase
       .from('stock_prices')
       .select('count')
@@ -32,6 +33,7 @@ export async function checkSupabaseConnection() {
 // 주식 데이터 가져오기 함수
 export async function fetchStocks() {
   try {
+    console.log('주식 데이터 가져오는 중...');
     const { data, error } = await supabase
       .from('stock_prices')
       .select('*')
@@ -42,6 +44,7 @@ export async function fetchStocks() {
       return null;
     }
     
+    console.log('주식 데이터 가져오기 성공:', data?.length, '개');
     return data;
   } catch (err) {
     console.error('주식 데이터 가져오기 예외:', err);
@@ -52,6 +55,7 @@ export async function fetchStocks() {
 // 투자 내역 저장 함수
 export async function saveInvestment(investmentData) {
   try {
+    console.log('투자 내역 저장 중...', investmentData);
     const { data, error } = await supabase
       .from('investments')
       .insert([investmentData]);
@@ -72,6 +76,7 @@ export async function saveInvestment(investmentData) {
 // 투자 내역 가져오기 함수
 export async function fetchInvestments() {
   try {
+    console.log('투자 내역 가져오는 중...');
     const { data, error } = await supabase
       .from('investments')
       .select('*')
@@ -82,9 +87,31 @@ export async function fetchInvestments() {
       return null;
     }
     
+    console.log('투자 내역 가져오기 성공:', data?.length, '개');
     return data;
   } catch (err) {
     console.error('투자 내역 가져오기 예외:', err);
     return null;
   }
 }
+
+// 초기화 함수
+export async function initializeSupabase() {
+  console.log('Supabase 초기화 시작...');
+  const isConnected = await checkSupabaseConnection();
+  if (isConnected) {
+    console.log('✅ Supabase 초기화 완료');
+    return true;
+  } else {
+    console.log('❌ Supabase 초기화 실패');
+    return false;
+  }
+}
+
+// 전역으로 내보내기
+window.supabase = supabase;
+window.checkSupabaseConnection = checkSupabaseConnection;
+window.fetchStocks = fetchStocks;
+window.saveInvestment = saveInvestment;
+window.fetchInvestments = fetchInvestments;
+window.initializeSupabase = initializeSupabase;

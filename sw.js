@@ -1,19 +1,19 @@
-// Service Worker for PWA - 파트너즈 증권 거래소
-const CACHE_NAME = 'partners-stock-v2';
-const STATIC_CACHE = 'partners-static-v2';
-const DYNAMIC_CACHE = 'partners-dynamic-v2';
+// Service Worker for PWA - 파트너즈 증권 거래소 (완전 수정 버전)
+const CACHE_NAME = 'partners-stock-v3';
+const STATIC_CACHE = 'partners-static-v3';
+const DYNAMIC_CACHE = 'partners-dynamic-v3';
 
-// 캐시할 정적 파일들
+// 캐시할 정적 파일들 (상대 경로 사용)
 const urlsToCache = [
-  './',
-  './index.html',
-  './main.js',
-  './main.css',
-  './manifest.json',
-  './favicon.ico',
-  './PRX_LOGO.png',
-  './PRX_STOCKMARKET_LOGO.png',
-  './config.js'
+  'index.html',
+  'main.js',
+  'main.css',
+  'manifest.json',
+  'favicon.ico',
+  'PRX_LOGO.png',
+  'PRX_STOCKMARKET_LOGO.png',
+  'config.js',
+  'supabase-client.js'
 ];
 
 // 설치 이벤트
@@ -28,6 +28,9 @@ self.addEventListener('install', function(event) {
       .then(function() {
         console.log('Service Worker 설치 완료');
         return self.skipWaiting();
+      })
+      .catch(function(error) {
+        console.error('Service Worker 설치 오류:', error);
       })
   );
 });
@@ -62,6 +65,8 @@ self.addEventListener('fetch', function(event) {
       request.url.includes('/api/') ||
       request.url.includes('supabase.co') ||
       request.url.includes('supabase.com') ||
+      request.url.includes('skypack.dev') ||
+      request.url.includes('cdn.skypack.dev') ||
       request.method !== 'GET') {
     
     event.respondWith(
@@ -94,6 +99,11 @@ self.addEventListener('fetch', function(event) {
               });
           }
           return response;
+        }).catch(function() {
+          // 네트워크 실패 시 기본 응답 반환
+          if (request.destination === 'document') {
+            return caches.match('index.html');
+          }
         });
       })
   );
@@ -113,8 +123,8 @@ self.addEventListener('push', function(event) {
     const data = event.data.json();
     const options = {
       body: data.body,
-      icon: './PRX_LOGO.png',
-      badge: './favicon.ico',
+      icon: 'PRX_LOGO.png',
+      badge: 'favicon.ico',
       vibrate: [100, 50, 100],
       data: {
         dateOfArrival: Date.now(),
@@ -124,12 +134,12 @@ self.addEventListener('push', function(event) {
         {
           action: 'explore',
           title: '확인하기',
-          icon: './PRX_LOGO.png'
+          icon: 'PRX_LOGO.png'
         },
         {
           action: 'close',
           title: '닫기',
-          icon: './favicon.ico'
+          icon: 'favicon.ico'
         }
       ]
     };
@@ -137,5 +147,12 @@ self.addEventListener('push', function(event) {
     event.waitUntil(
       self.registration.showNotification(data.title, options)
     );
+  }
+});
+
+// 메시지 처리
+self.addEventListener('message', function(event) {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
   }
 });
