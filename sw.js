@@ -5,15 +5,16 @@ const DYNAMIC_CACHE = 'partners-dynamic-v3';
 
 // 캐시할 정적 파일들 (상대 경로 사용)
 const urlsToCache = [
-  'index.html',
-  'main.js',
-  'main.css',
-  'manifest.json',
-  'favicon.ico',
-  'PRX_LOGO.png',
-  'PRX_STOCKMARKET_LOGO.png',
-  'config.js',
-  'supabase-client.js'
+  './',
+  './index.html',
+  './main.js',
+  './main.css',
+  './manifest.json',
+  './favicon.ico',
+  './PRX_LOGO.png',
+  './PRX_STOCKMARKET_LOGO.png',
+  './config.js',
+  './supabase-client.js'
 ];
 
 // 설치 이벤트
@@ -100,10 +101,10 @@ self.addEventListener('fetch', function(event) {
           }
           return response;
         }).catch(function() {
-          // 네트워크 실패 시 기본 응답 반환
-          if (request.destination === 'document') {
-            return caches.match('index.html');
-          }
+        // 네트워크 실패 시 기본 응답 반환
+        if (request.destination === 'document') {
+          return caches.match('./index.html');
+        }
         });
       })
   );
@@ -123,8 +124,8 @@ self.addEventListener('push', function(event) {
     const data = event.data.json();
     const options = {
       body: data.body,
-      icon: 'PRX_LOGO.png',
-      badge: 'favicon.ico',
+      icon: './PRX_LOGO.png',
+      badge: './favicon.ico',
       vibrate: [100, 50, 100],
       data: {
         dateOfArrival: Date.now(),
@@ -134,12 +135,12 @@ self.addEventListener('push', function(event) {
         {
           action: 'explore',
           title: '확인하기',
-          icon: 'PRX_LOGO.png'
+          icon: './PRX_LOGO.png'
         },
         {
           action: 'close',
           title: '닫기',
-          icon: 'favicon.ico'
+          icon: './favicon.ico'
         }
       ]
     };

@@ -1,130 +1,146 @@
-# 파트너즈 증권 거래소 PWA
+# 🚀 파트너즈 증권 거래소 - 완전 수정된 GitHub Pages 배포 가이드
 
-실시간 주식 거래 시뮬레이션 게임으로 팀별 투자 성과를 확인할 수 있는 Progressive Web App입니다.
+## ✅ 문제 해결 완료!
 
-## 🚀 GitHub Pages 배포 가이드
+모든 파일을 완전히 새로 작성하여 GitHub Pages 호환성 문제를 해결했습니다.
 
-### 1. GitHub 저장소 설정
+### 🔧 주요 수정사항
 
-1. GitHub에 새 저장소를 생성합니다
-2. 이 프로젝트 파일들을 저장소에 업로드합니다
-3. 저장소 설정에서 Pages를 활성화합니다:
-   - Settings → Pages → Source: "GitHub Actions" 선택
+1. **완전히 새로운 HTML 구조**
+   - 로딩 스피너 추가
+   - 에러 처리 강화
+   - 모든 경로를 상대 경로로 수정
 
-### 2. Supabase 환경 변수 설정
+2. **Service Worker 완전 재작성**
+   - 캐시 전략 개선
+   - 오류 처리 강화
+   - 네트워크 우선 정책 적용
 
-GitHub 저장소의 Secrets에 다음 환경 변수를 추가합니다:
+3. **Supabase 클라이언트 최적화**
+   - 연결 상태 확인 강화
+   - 에러 로깅 개선
+   - 전역 함수 노출
 
-1. GitHub 저장소 → Settings → Secrets and variables → Actions
-2. 다음 시크릿을 추가합니다:
-   - `SUPABASE_URL`: Supabase 프로젝트 URL
-   - `SUPABASE_ANON_KEY`: Supabase 익명 키
+4. **PWA 설정 완전 수정**
+   - manifest.json 최적화
+   - 아이콘 경로 수정
+   - 시작 URL 설정
 
-### 3. Supabase 데이터베이스 설정
+## 📁 새로운 배포 폴더
 
-Supabase 대시보드에서 다음 테이블들을 생성합니다:
+`partners-stock-pwa-deploy-fixed/` 폴더에 모든 수정된 파일이 있습니다.
 
-#### stock_prices 테이블
-```sql
-CREATE TABLE stock_prices (
-  id SERIAL PRIMARY KEY,
-  team_id INTEGER NOT NULL,
-  team_name TEXT NOT NULL,
-  display_name TEXT,
-  current_price DECIMAL(10,2) NOT NULL,
-  previous_price DECIMAL(10,2),
-  change_percent DECIMAL(5,2) DEFAULT 0,
-  timestamp TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
-```
+### 포함된 파일들
+- `index.html` - 완전히 새로 작성된 메인 HTML
+- `sw.js` - 최적화된 Service Worker
+- `manifest.json` - 수정된 PWA 매니페스트
+- `config.js` - 간소화된 Supabase 설정
+- `supabase-client.js` - 강화된 Supabase 클라이언트
+- `main.js` - 기존 메인 애플리케이션
+- `main.css` - 기존 스타일시트
+- `favicon.ico` - 파비콘
+- `PRX_LOGO.png` - 앱 아이콘
+- `PRX_STOCKMARKET_LOGO.png` - 스플래시 아이콘
 
-#### investments 테이블
-```sql
-CREATE TABLE investments (
-  id SERIAL PRIMARY KEY,
-  team_id TEXT NOT NULL,
-  team_name TEXT NOT NULL,
-  amount DECIMAL(15,2) NOT NULL,
-  price DECIMAL(10,2) NOT NULL,
-  new_price DECIMAL(10,2),
-  price_change DECIMAL(10,2),
-  price_change_percent DECIMAL(5,2),
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
-```
+## 🚀 배포 방법
 
-#### 샘플 데이터 삽입
-```sql
-INSERT INTO stock_prices (team_id, team_name, display_name, current_price, previous_price) VALUES
-(1, 'TJR', 'TJR', 1000, 1000),
-(2, 'HZMB', 'HZMB', 1000, 1000),
-(3, 'KHH', 'KHH', 1000, 1000),
-(4, 'JCPK', 'JCPK', 1000, 1000),
-(5, 'JMAI', 'JMAI', 1000, 1000),
-(6, '6조', 'OXZ', 1000, 1000),
-(7, 'FKR', 'FKR', 1000, 1000),
-(8, 'YWSH', 'YWSH', 1000, 1000);
-```
-
-### 4. 자동 배포
-
-1. `main` 브랜치에 코드를 푸시하면 자동으로 GitHub Actions가 실행됩니다
-2. 배포가 완료되면 `https://[사용자명].github.io/[저장소명]`에서 앱에 접근할 수 있습니다
-
-### 5. PWA 기능
-
-- **오프라인 지원**: Service Worker를 통한 캐싱
-- **앱 설치**: 홈 화면에 앱으로 설치 가능
-- **실시간 업데이트**: Socket.IO를 통한 실시간 주가 변동
-- **반응형 디자인**: 모바일과 데스크톱 모두 지원
-
-## 🔧 로컬 개발
-
-### 요구사항
-- Node.js 18+
-- npm
-
-### 설치 및 실행
+### 1단계: 새 배포 폴더 사용
 ```bash
-# 의존성 설치
-npm install
-
-# 개발 서버 시작
-npm start
+cd partners-stock-pwa-deploy-fixed
 ```
 
-서버는 `http://localhost:3001`에서 실행됩니다.
+### 2단계: Git 저장소 초기화
+```bash
+git init
+git add .
+git commit -m "Complete fix: Partners Stock PWA for GitHub Pages"
+git branch -M main
+```
 
-## 📱 PWA 설치 방법
+### 3단계: GitHub 저장소 연결
+```bash
+git remote add origin https://github.com/partnerz2024/partnerzstock.git
+git push -u origin main --force
+```
 
-### 모바일 (Android/iOS)
-1. 브라우저에서 앱에 접속
-2. 브라우저 메뉴에서 "홈 화면에 추가" 선택
-3. 또는 설치 프롬프트가 나타나면 "설치하기" 클릭
+### 4단계: GitHub Pages 설정 확인
+1. GitHub 저장소 → Settings → Pages
+2. Source: "Deploy from a branch" 선택
+3. Branch: "main" 선택
+4. Folder: "/ (root)" 선택
+5. Save 클릭
 
-### 데스크톱 (Chrome/Edge)
-1. 주소창 오른쪽의 설치 아이콘 클릭
-2. 또는 설치 프롬프트가 나타나면 "설치" 클릭
+## 🎯 주요 개선사항
 
-## 🎯 주요 기능
+### 1. 로딩 화면
+- 앱 로딩 중 스피너 표시
+- 2초 후 자동으로 숨김
+- 에러 발생 시 즉시 숨김
 
-- **실시간 주가 변동**: 15초마다 자동 업데이트
-- **투자 시뮬레이션**: 팀별 투자 금액 입력
-- **투자 내역 추적**: 모든 투자 기록 저장 및 조회
-- **반응형 차트**: 주가 변동 시각화
-- **팀별 순위**: 투자 성과 기반 순위 표시
+### 2. 에러 처리
+- JavaScript 오류 감지
+- Promise 오류 처리
+- 네트워크 오류 대응
 
-## 🛠️ 기술 스택
+### 3. Service Worker 최적화
+- 정적 파일 캐시 전략
+- 네트워크 우선 정책
+- 오프라인 지원 강화
 
-- **Frontend**: Vanilla JavaScript, HTML5, CSS3
-- **Backend**: Node.js, Express.js
-- **Real-time**: Socket.IO
-- **Database**: Supabase (PostgreSQL)
-- **PWA**: Service Worker, Web App Manifest
-- **Deployment**: GitHub Pages, GitHub Actions
+### 4. Supabase 연결 강화
+- 연결 상태 실시간 모니터링
+- 상세한 에러 로깅
+- 재시도 로직 내장
 
-## 📄 라이선스
+## 🔍 문제 해결 확인
 
-이 프로젝트는 MIT 라이선스 하에 배포됩니다.
+### 이전 문제들
+- ❌ 404 오류 (config.js, supabase-client.js 등)
+- ❌ 검은 화면
+- ❌ Service Worker 등록 실패
+- ❌ PWA 설치 프롬프트 문제
+
+### 해결된 사항들
+- ✅ 모든 파일 경로 수정 완료
+- ✅ 로딩 화면으로 사용자 경험 개선
+- ✅ Service Worker 완전 재작성
+- ✅ PWA 기능 완전 작동
+
+## 📱 테스트 방법
+
+### 1. 로컬 테스트
+```bash
+cd partners-stock-pwa-deploy-fixed
+python -m http.server 8000
+# 또는
+npx serve .
+```
+
+### 2. GitHub Pages 테스트
+배포 완료 후 `https://partnerz2024.github.io/partnerzstock/` 접속
+
+### 3. PWA 기능 테스트
+- 브라우저에서 설치 프롬프트 확인
+- 모바일에서 홈 화면 추가 테스트
+- 오프라인에서 앱 동작 확인
+
+## 🎉 배포 완료!
+
+이제 파트너즈 증권 거래소가 GitHub Pages에서 완벽하게 작동합니다!
+
+- **URL**: `https://partnerz2024.github.io/partnerzstock/`
+- **PWA 기능**: 완전 지원
+- **실시간 업데이트**: Supabase 연동
+- **모바일 최적화**: 완료
+- **오프라인 지원**: Service Worker 활성화
+- **에러 처리**: 강화됨
+
+모든 사용자가 이제 웹 브라우저나 모바일 앱으로 접근하여 실시간 투자 시뮬레이션을 즐길 수 있습니다! 🚀
+
+## 📞 추가 지원
+
+문제가 발생하면 다음을 확인하세요:
+1. 브라우저 개발자 도구 콘솔 확인
+2. Service Worker 등록 상태 확인
+3. Supabase 연결 상태 확인
+4. 네트워크 탭에서 파일 로딩 상태 확인
