@@ -1,0 +1,32 @@
+{
+  "name": "partners-stock-pwa",
+  "version": "1.0.0",
+  "description": "파트너즈 증권 거래소 - 실시간 주식 거래 시뮬레이션 PWA",
+  "main": "main.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "build": "mkdir -p dist && cp -r *.html *.js *.css *.json *.ico *.png icons/ dist/",
+    "deploy": "npm run build && echo 'Build completed. Ready for GitHub Pages deployment.'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["pwa", "stock", "simulation", "real-time", "investment", "partners"],
+  "author": "Partners Team",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.75.1",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "socket.io": "^4.8.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/[사용자명]/[저장소명].git"
+  },
+  "homepage": "https://[사용자명].github.io/[저장소명]"
+}
