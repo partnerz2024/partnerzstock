@@ -5,15 +5,15 @@ const DYNAMIC_CACHE = 'partners-dynamic-v2';
 
 // 캐시할 정적 파일들
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/main.js',
-  '/main.css',
-  '/manifest.json',
-  '/favicon.ico',
-  '/PRX_LOGO.png',
-  '/PRX_STOCKMARKET_LOGO.png',
-  '/config.js'
+  './',
+  './index.html',
+  './main.js',
+  './main.css',
+  './manifest.json',
+  './favicon.ico',
+  './PRX_LOGO.png',
+  './PRX_STOCKMARKET_LOGO.png',
+  './config.js'
 ];
 
 // 설치 이벤트
@@ -113,8 +113,8 @@ self.addEventListener('push', function(event) {
     const data = event.data.json();
     const options = {
       body: data.body,
-      icon: '/PRX_LOGO.png',
-      badge: '/favicon.ico',
+      icon: './PRX_LOGO.png',
+      badge: './favicon.ico',
       vibrate: [100, 50, 100],
       data: {
         dateOfArrival: Date.now(),
@@ -124,12 +124,12 @@ self.addEventListener('push', function(event) {
         {
           action: 'explore',
           title: '확인하기',
-          icon: '/PRX_LOGO.png'
+          icon: './PRX_LOGO.png'
         },
         {
           action: 'close',
           title: '닫기',
-          icon: '/favicon.ico'
+          icon: './favicon.ico'
         }
       ]
     };
